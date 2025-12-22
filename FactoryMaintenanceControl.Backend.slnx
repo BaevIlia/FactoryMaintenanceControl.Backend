@@ -1,4 +1,6 @@
 <Solution>
   <Folder Name="/Microservices/" />
-  <Folder Name="/UI/" />
+  <Folder Name="/UI/">
+    <Project Path="WebBFF/WebBFF.csproj" Id="409d6861-8864-45b7-a0bb-ffe27cf3d102" />
+  </Folder>
 </Solution>

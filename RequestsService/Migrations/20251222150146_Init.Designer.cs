@@ -10,7 +10,7 @@ using RequestsService.Infrastructure;
 
 namespace RequestsService.Migrations
 {
-    [DbContext(typeof(RequestsDbContext))]
+    [DbContext(typeof(RequestDbContext))]
     [Migration("20251222150146_Init")]
     partial class Init
     {

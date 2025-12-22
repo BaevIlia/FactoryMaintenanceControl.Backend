@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RequestsService.Application.Usecases.Requests.Queries;
 
 namespace RequestsService.Controllers;
 
@@ -6,9 +8,18 @@ namespace RequestsService.Controllers;
 [Route("[controller]")]
 public class RequestsController : ControllerBase
 {
-    [HttpGet]
-    public async Task<IActionResult> GetRequests(int id)
+    private readonly IMediator _mediator;
+
+    public RequestsController(IMediator mediator)
     {
-        return Ok();
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetRequests()
+    {
+        var result = await _mediator.Send(new GetRequestsQuery());
+
+        return Ok(result);
     }
 }

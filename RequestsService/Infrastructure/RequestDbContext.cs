@@ -3,16 +3,16 @@ using RequestsService.Domain.Entities;
 
 namespace RequestsService.Infrastructure;
 
-public class RequestsDbContext : DbContext
+public class RequestDbContext : DbContext
 {
     private readonly IConfiguration _configuration;
 
-    public RequestsDbContext(IConfiguration configuration)
+    public RequestDbContext(IConfiguration configuration)
     {
         _configuration = configuration;
     }
 
-    DbSet<Request> Requests { get; set; }
+    public DbSet<RequestEntity> Requests { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

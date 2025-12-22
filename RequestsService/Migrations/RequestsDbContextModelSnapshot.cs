@@ -9,7 +9,7 @@ using RequestsService.Infrastructure;
 
 namespace RequestsService.Migrations
 {
-    [DbContext(typeof(RequestsDbContext))]
+    [DbContext(typeof(RequestDbContext))]
     partial class RequestsDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

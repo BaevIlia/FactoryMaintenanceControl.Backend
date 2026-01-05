@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RequestsService.Domain.Entities;
+using RequestsService.Domain.Enums;
 
 namespace RequestsService.Application.Usecases.Requests;
 
@@ -11,4 +12,8 @@ public class RequestViewModel
     public string Title { get; set; }
 
     public string Description { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+
+    public RequestStatus Status { get; set; }
 }

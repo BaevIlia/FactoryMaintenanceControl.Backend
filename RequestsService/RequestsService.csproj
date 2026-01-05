@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Application\Usecases\Requests\Commands\" />
-    <Folder Include="Domain\Dtos\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,6 +13,7 @@ public class RequestDbContext : DbContext
     }
 
     public DbSet<RequestEntity> Requests { get; set; }
+    public DbSet<UserEntity> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -22,5 +23,6 @@ public class RequestDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new RequestEntityConfiguration());
+        modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
     }
 }

@@ -19,4 +19,11 @@ public class RequestRepository : IRequestRepository
 
         return result;
     }
+
+    public async Task<IEnumerable<RequestEntity>> GetListByUser(Guid userId)
+    {
+        var result = _context.Requests.Where(x => x.AuthorId == userId).ToList();
+
+        return result;
+    }
 }

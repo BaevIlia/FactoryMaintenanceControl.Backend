@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RequestsService.Application.Usecases.Requests.Queries;
+using RequestsService.Application.Usecases.Requests.Queries.GetByUser;
 
 namespace RequestsService.Controllers;
 
@@ -16,9 +17,9 @@ public class RequestsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetRequests()
+    public async Task<IActionResult> GetRequestsByUser([FromQuery] Guid userId)
     {
-        var result = await _mediator.Send(new GetRequestsQuery());
+        var result = await _mediator.Send(new GetRequestsByUserQuery(userId));
 
         return Ok(result);
     }

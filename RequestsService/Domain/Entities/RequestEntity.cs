@@ -22,11 +22,11 @@ public class RequestEntity
 
     public Guid AuthorId { get; set; }
 
-    public Guid ResponsibleId { get; set; }
+    public Guid? ResponsibleId { get; set; }
 
     public UserEntity Author { get; set; }
 
-    public UserEntity Responsible { get; set; }
+    public UserEntity? Responsible { get; set; }
 }
 
 public class RequestEntityConfiguration : IEntityTypeConfiguration<RequestEntity>
@@ -34,6 +34,11 @@ public class RequestEntityConfiguration : IEntityTypeConfiguration<RequestEntity
     public void Configure(EntityTypeBuilder<RequestEntity> builder)
     {
         builder.HasKey(x => x.Id);
+
+        builder.Property(x => x.Id)
+            .UseIdentityColumn();
+
+        builder.HasIndex(x => new { x.Id, x.AuthorId });
 
         builder.HasOne(a => a.Author)
                .WithMany(r => r.CreatedRequests)
@@ -43,6 +48,6 @@ public class RequestEntityConfiguration : IEntityTypeConfiguration<RequestEntity
         builder.HasOne(r => r.Responsible)
                .WithMany(r => r.ResponsibleRequests)
                .HasForeignKey(r => r.ResponsibleId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .OnDelete(DeleteBehavior.SetNull);
     }
 }

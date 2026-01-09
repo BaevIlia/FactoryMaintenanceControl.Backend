@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RequestsService.Application.Usecases.Requests.Commands;
 using RequestsService.Application.Usecases.Requests.Queries;
 using RequestsService.Application.Usecases.Requests.Queries.GetByUser;
 
@@ -16,7 +17,7 @@ public class RequestsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet("user")]
+    [HttpGet()]
     public async Task<IActionResult> GetListByUser()
     {
         var result = await _mediator.Send(new GetRequestsByUserQuery());
@@ -24,11 +25,19 @@ public class RequestsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("user/{id}")]
-    public async Task<IActionResult> GetByUser([FromQuery] Guid requestId)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByUser([FromRoute] int id)
     {
-        var result = await _mediator.Send(new GetRequestByUserQuery());
+        var result = await _mediator.Send(new GetRequestByUserQuery(id));
 
         return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateRequest([FromBody] CreateRequestCommand command)
+    {
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 }

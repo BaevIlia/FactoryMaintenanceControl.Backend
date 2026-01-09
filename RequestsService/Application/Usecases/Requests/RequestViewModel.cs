@@ -4,6 +4,7 @@ using RequestsService.Domain.Enums;
 
 namespace RequestsService.Application.Usecases.Requests;
 
+//TODO: Переделать под деталку
 [AutoMap(typeof(RequestEntity))]
 public class RequestViewModel
 {

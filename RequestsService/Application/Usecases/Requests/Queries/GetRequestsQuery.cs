@@ -6,6 +6,8 @@ namespace RequestsService.Application.Usecases.Requests.Queries;
 
 public class GetRequestsQuery : IRequest<IEnumerable<RequestViewModel>>
 {
+    public int RequestId { get; set; }
+
     private class Handler : IRequestHandler<GetRequestsQuery, IEnumerable<RequestViewModel>>
     {
         private readonly IMapper _mapper;
@@ -19,7 +21,8 @@ public class GetRequestsQuery : IRequest<IEnumerable<RequestViewModel>>
 
         public async Task<IEnumerable<RequestViewModel>> Handle(GetRequestsQuery request, CancellationToken cancellationToken)
         {
-            var requests = _mapper.Map<IEnumerable<RequestViewModel>>(await _repository.GetList());
+            var userId = Guid.Parse("c5209f70-7106-4166-b1c1-36a07693129f");
+            var requests = _mapper.Map<IEnumerable<RequestViewModel>>(await _repository.GetByUser(request.RequestId, userId));
 
             return requests;
         }

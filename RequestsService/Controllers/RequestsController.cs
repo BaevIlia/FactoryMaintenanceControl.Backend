@@ -16,10 +16,18 @@ public class RequestsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetRequestsByUser([FromQuery] Guid userId)
+    [HttpGet("user")]
+    public async Task<IActionResult> GetListByUser()
     {
-        var result = await _mediator.Send(new GetRequestsByUserQuery(userId));
+        var result = await _mediator.Send(new GetRequestsByUserQuery());
+
+        return Ok(result);
+    }
+
+    [HttpGet("user/{id}")]
+    public async Task<IActionResult> GetByUser([FromQuery] Guid requestId)
+    {
+        var result = await _mediator.Send(new GetRequestByUserQuery());
 
         return Ok(result);
     }

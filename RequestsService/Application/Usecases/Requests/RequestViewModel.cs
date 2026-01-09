@@ -16,4 +16,10 @@ public class RequestViewModel
     public DateTime CreatedAt { get; set; }
 
     public RequestStatus Status { get; set; }
+
+    public RequestType Type {  get; set; }
+
+    public RequestPriority Priority { get; set; }
+
+    public string Responsible { get; set;}
 }

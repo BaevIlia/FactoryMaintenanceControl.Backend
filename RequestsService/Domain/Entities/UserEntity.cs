@@ -15,6 +15,10 @@ public class UserEntity
     public string Email { get; set; }
 
     public string Phone { get; set; }
+
+    public ICollection<RequestEntity> CreatedRequests { get; set; }
+
+    public ICollection<RequestEntity> ResponsibleRequests { get; set; }
 }
 
 public class UserEntityConfiguration : IEntityTypeConfiguration<UserEntity>

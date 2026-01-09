@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RequestsService.Infrastructure;
@@ -11,9 +12,11 @@ using RequestsService.Infrastructure;
 namespace RequestsService.Migrations
 {
     [DbContext(typeof(RequestDbContext))]
-    partial class RequestsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260109211646_RequestsRework")]
+    partial class RequestsRework
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

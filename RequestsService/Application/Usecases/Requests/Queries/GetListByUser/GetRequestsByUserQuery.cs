@@ -6,13 +6,6 @@ namespace RequestsService.Application.Usecases.Requests.Queries.GetByUser;
 
 public class GetRequestsByUserQuery : IRequest<IEnumerable<RequestViewModel>>
 {
-    public Guid UserId { get; set; }
-
-    public GetRequestsByUserQuery(Guid userId)
-    {
-        UserId = userId;
-    }
-
     private class Handler : IRequestHandler<GetRequestsByUserQuery, IEnumerable<RequestViewModel>>
     {
         private readonly IRequestRepository _repository;
@@ -26,7 +19,9 @@ public class GetRequestsByUserQuery : IRequest<IEnumerable<RequestViewModel>>
 
         public async Task<IEnumerable<RequestViewModel>> Handle(GetRequestsByUserQuery request, CancellationToken cancellationToken)
         {
-            var result = await _repository.GetListByUser(request.UserId);
+            //TODO: Переделать на получение Id из аутентификации
+            var mockUserId = Guid.Parse("c5209f70-7106-4166-b1c1-36a07693129f");
+            var result = await _repository.GetListByUser(mockUserId);
 
             return _mapper.Map<IEnumerable<RequestViewModel>>(result);
         }

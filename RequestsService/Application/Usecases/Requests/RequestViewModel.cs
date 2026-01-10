@@ -4,8 +4,6 @@ using RequestsService.Domain.Enums;
 
 namespace RequestsService.Application.Usecases.Requests;
 
-//TODO: Переделать под деталку
-[AutoMap(typeof(RequestEntity))]
 public class RequestViewModel
 {
     public int Id { get; set; }
@@ -22,5 +20,14 @@ public class RequestViewModel
 
     public RequestPriority Priority { get; set; }
 
-    public string Responsible { get; set;}
+    public string ResponsibleName { get; set;}
+}
+
+public class RequestViewModelMapProfile : Profile
+{
+    public RequestViewModelMapProfile()
+    {
+        CreateMap<RequestEntity, RequestViewModel>()
+            .ForMember(x => x.ResponsibleName, cfg => cfg.MapFrom(x => x.Responsible != null ? x.Responsible.FullName : string.Empty));
+    }
 }

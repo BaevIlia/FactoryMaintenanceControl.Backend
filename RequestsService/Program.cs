@@ -28,7 +28,7 @@ builder.Services.AddDbContext<RequestDbContext>();
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddMaps(typeof(Program).Assembly);
+    cfg.AddMaps(Assembly.GetExecutingAssembly());
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));

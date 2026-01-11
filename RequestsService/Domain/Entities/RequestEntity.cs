@@ -20,6 +20,8 @@ public class RequestEntity
 
     public RequestType Type { get; set; }
 
+    public DateTime? DeletedAt { get; set; }
+
     public Guid AuthorId { get; set; }
 
     public Guid? ResponsibleId { get; set; }

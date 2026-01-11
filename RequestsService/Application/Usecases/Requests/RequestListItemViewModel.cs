@@ -5,7 +5,6 @@ using RequestsService.Domain.Enums;
 
 namespace RequestsService.Application.Usecases.Requests;
 
-//[AutoMap(typeof(RequestEntity))]
 public class RequestListItemViewModel
 {
     public int Id { get; set; }

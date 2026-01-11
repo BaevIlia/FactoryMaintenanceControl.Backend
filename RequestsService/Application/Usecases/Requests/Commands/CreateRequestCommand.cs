@@ -27,6 +27,8 @@ public class CreateRequestCommand : IRequest
         public async Task Handle(CreateRequestCommand request, CancellationToken cancellationToken)
         {
             var userId = Guid.Parse("c5209f70-7106-4166-b1c1-36a07693129f");
+
+            //TODO: Реализовать маппинг команды в DTO
             var newRequest = new CreateRequestDto
             {
                 Title = request.Title,

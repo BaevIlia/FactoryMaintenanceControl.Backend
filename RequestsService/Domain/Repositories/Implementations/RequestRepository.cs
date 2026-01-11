@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.EntityFrameworkCore;
 using RequestsService.Domain.Dto;
 using RequestsService.Domain.Entities;
+using RequestsService.Domain.Enums;
 using RequestsService.Domain.Repositories.Interfaces;
 using RequestsService.Infrastructure;
 
@@ -17,7 +19,7 @@ public class RequestRepository : IRequestRepository
 
     public async Task<IEnumerable<RequestEntity>> GetListByUser(Guid userId)
     {
-        var result = _context.Requests.Where(x => x.AuthorId == userId)
+        var result = _context.Requests.Where(x => x.AuthorId == userId && x.DeletedAt == null)
                                       .Include(x => x.Author)
                                       .Include(x => x.Responsible)
                                       .ToList();
@@ -27,7 +29,8 @@ public class RequestRepository : IRequestRepository
 
     public async Task<RequestEntity> GetByUser(int requestId, Guid userId)
     {
-        var result = _context.Requests.Where(x => x.Id == requestId && x.AuthorId == userId)
+        var result = _context.Requests.Where(x => x.DeletedAt == null)
+                                      .Where(x => x.Id == requestId && x.AuthorId == userId)
                                       .Include(x => x.Author)
                                       .Include(x => x.Responsible)
                                       .FirstOrDefault();
@@ -55,14 +58,32 @@ public class RequestRepository : IRequestRepository
         _context.SaveChanges();
     }
 
-    public async Task UpdateRequest()
+    public async Task UpdateRequest(int requestId, Guid userId, string title, string description, RequestType type, RequestPriority priority)
     {
-        throw new NotImplementedException(); 
+        var request = _context.Requests.FirstOrDefault(x=>x.Id == requestId && x.AuthorId == userId && x.DeletedAt == null);
+
+        if (request == null)
+            throw new BadHttpRequestException("Указанная заявка отсутствует");
+
+        request.Title = title;
+        request.Description = description;
+        request.Type = type;
+        request.Priority = priority;
+
+        _context.SaveChanges();
     }
 
-    public async Task ChangeStatus()
+    public async Task ChangeStatus(int requestId, Guid userId, RequestStatus status)
     {
-        throw new NotImplementedException();
+        var request = _context.Requests.FirstOrDefault(x => x.Id == requestId && x.AuthorId == userId && x.DeletedAt == null);
+
+        if (request == null)
+            throw new BadHttpRequestException("Указанная заявка отсутствует");
+
+        //TODO: Проверка пользователей при смене статуса
+        request.Status = status;
+
+        _context.SaveChanges();
     }
 
     public async Task DeleteRequest(int requestId, Guid userId)
@@ -72,7 +93,10 @@ public class RequestRepository : IRequestRepository
         if (request == null)
             throw new BadHttpRequestException("Указанная заявка отсутствует");
 
-        _context.Requests.Remove(request);
+        if (request.AuthorId != userId)
+            throw new UnauthorizedAccessException("Указанная заявка не принадлежит пользователю");
+
+        request.DeletedAt = DateTime.Now;
 
         _context.SaveChanges();
     }

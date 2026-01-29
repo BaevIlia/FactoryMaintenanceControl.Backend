@@ -18,7 +18,7 @@ public class RequestsController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpGet()]
+    [HttpGet]
     public async Task<IActionResult> GetListByUser()
     {
         var result = await _mediator.Send(new GetRequestsByUserQuery());

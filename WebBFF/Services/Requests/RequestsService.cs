@@ -23,4 +23,13 @@ public class RequestsService : IRequestsService
 
         return _mapper.Map<RequestViewModel>(res);
     }
+
+    public async Task<RequestListItemViewModel[]> GetRequests()
+    {
+        var userId = Guid.Parse("c5209f70-7106-4166-b1c1-36a07693129f");
+
+        var res = await _restClient.GetList(userId);
+
+        return _mapper.Map<RequestListItemViewModel[]>(res);
+    }
 }

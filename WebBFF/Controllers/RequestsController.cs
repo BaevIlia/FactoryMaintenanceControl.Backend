@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebBFF.Usecases.Queries.GetRequest;
+using WebBFF.Usecases.Queries.GetRequests;
 
 namespace WebBFF.Controllers;
 
@@ -18,7 +19,9 @@ public class RequestsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetRequests()
     {
-        throw new NotImplementedException();
+        var result = await _mediator.Send(new GetRequestsQuery());
+
+        return Ok(result);
     }
 
     [HttpGet("{id}")]

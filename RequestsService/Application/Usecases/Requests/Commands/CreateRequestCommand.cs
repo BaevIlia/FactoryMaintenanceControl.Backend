@@ -5,6 +5,7 @@ using RequestsService.Domain.Repositories.Interfaces;
 
 namespace RequestsService.Application.Usecases.Requests.Commands;
 
+//TODO: Реализовать добавление ответственного при создании
 public class CreateRequestCommand : IRequest
 {
     public string Title { get; set; }

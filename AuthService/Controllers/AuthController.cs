@@ -11,4 +11,16 @@ public class AuthController : ControllerBase
     {
         return Ok("Good");
     }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Registration()
+    {
+        throw new NotImplementedException();
+    }
+
+    [HttpPost("auth")]
+    public async Task<IActionResult> Authentication()
+    {
+        throw new NotImplementedException();
+    }
 }

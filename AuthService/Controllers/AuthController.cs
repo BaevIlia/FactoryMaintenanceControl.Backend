@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AuthService.Application.Usecases.Commands;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AuthService.Controllers;
 
@@ -6,6 +8,13 @@ namespace AuthService.Controllers;
 [Route("[controller]")]
 public class AuthController : ControllerBase
 {
+    private readonly IMediator _mediator;
+
+    public AuthController(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     [HttpGet]
     public async Task<IActionResult> Ping()
     {
@@ -13,9 +22,11 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Registration()
+    public async Task<IActionResult> Registration([FromBody] RegistrationCommand command)
     {
-        throw new NotImplementedException();
+        await _mediator.Send(command);
+
+        return NoContent();
     }
 
     [HttpPost("auth")]

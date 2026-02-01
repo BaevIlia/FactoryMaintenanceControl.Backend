@@ -10,6 +10,8 @@ public class User
 
     public string Email { get; set; }
 
+    public string Password { get; set; }
+
     public string PhoneNumber { get; set; }
 
     public JobTitle Title { get; set; }
@@ -29,6 +31,7 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
         {
             Id = Guid.Parse("c5209f70-7106-4166-b1c1-36a07693129f"),
             Email = "engineer@job.ru",
+            Password = "1234",
             PhoneNumber = "+79999999999",
             Title = JobTitle.Engineer,
             RegistrationDate = new DateTime(2026, 02, 01),

@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Microservices/">
+    <Project Path="AuthService/AuthService.csproj" Id="525d8d08-0a7c-4fbb-a8e3-0eec2644f0c7" />
     <Project Path="RequestsService/RequestsService.csproj" Id="3719727e-253f-46b9-9fdb-234193942c0c" />
   </Folder>
   <Folder Name="/UI/">

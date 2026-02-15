@@ -2,6 +2,7 @@
 using AuthService.Domain.Entities;
 using AuthService.Domain.Repositories.Interfaces;
 using AuthService.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthService.Domain.Repositories.Implementations;
 
@@ -12,6 +13,13 @@ public class UserRepository : IUserRepository
     public UserRepository(AuthDbContext context)
     {
         _context = context;
+    }
+
+    public async Task<User> GetByEmail(string email)
+    {
+        var res = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+
+        return res;
     }
 
     public async Task Register(UserData data)

@@ -34,8 +34,10 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("auth")]
-    public async Task<IActionResult> Authentication()
+    public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
-        throw new NotImplementedException();
+        var result = await _mediator.Send(command);
+
+        return Ok(result);
     }
 }

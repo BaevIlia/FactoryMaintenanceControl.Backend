@@ -1,4 +1,7 @@
 using AuthService.Application.Events;
+using AuthService.Application.Tools.Dto;
+using AuthService.Application.Tools.Impl;
+using AuthService.Application.Tools.Interfaces;
 using AuthService.Domain.Entities;
 using AuthService.Domain.Repositories.Implementations;
 using AuthService.Domain.Repositories.Interfaces;
@@ -22,11 +25,15 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDbContext<AuthDbContext>();
 
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
 builder.Services.AutoRegisterHandlersFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<ITokenProvider, JwtProvider>();
 
 builder.Services.AddRebus(cfg => cfg.Transport(t =>
                                     t.UseRabbitMq(builder.Configuration.GetConnectionString("RabbitMQ"), "auth.service.queue").InputQueueOptions(q =>

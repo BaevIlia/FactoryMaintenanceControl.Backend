@@ -21,6 +21,8 @@ public class RequestViewModel
     public RequestPriority Priority { get; set; }
 
     public string ResponsibleName { get; set;}
+
+    public string AuthorName { get; set;}
 }
 
 public class RequestViewModelMapProfile : Profile
@@ -28,6 +30,7 @@ public class RequestViewModelMapProfile : Profile
     public RequestViewModelMapProfile()
     {
         CreateMap<RequestEntity, RequestViewModel>()
+            .ForMember(x => x.AuthorName, cfg => cfg.MapFrom(x=>x.Author != null ? x.Author.FullName : string.Empty))
             .ForMember(x => x.ResponsibleName, cfg => cfg.MapFrom(x => x.Responsible != null ? x.Responsible.FullName : string.Empty));
     }
 }

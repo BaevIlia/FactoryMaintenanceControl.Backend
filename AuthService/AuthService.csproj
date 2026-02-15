@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -13,13 +13,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
+    <PackageReference Include="Rebus" Version="8.9.0" />
+    <PackageReference Include="Rebus.RabbitMq" Version="10.1.1" />
+    <PackageReference Include="Rebus.ServiceProvider" Version="10.7.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="10.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="10.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="10.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Events\" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

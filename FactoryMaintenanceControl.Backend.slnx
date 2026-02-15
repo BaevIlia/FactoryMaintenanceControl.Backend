@@ -3,6 +3,9 @@
     <Project Path="AuthService/AuthService.csproj" Id="525d8d08-0a7c-4fbb-a8e3-0eec2644f0c7" />
     <Project Path="RequestsService/RequestsService.csproj" Id="3719727e-253f-46b9-9fdb-234193942c0c" />
   </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Shared/Shared.csproj" Id="2f36ea49-0c9f-4ba5-a46a-6d352f190067" />
+  </Folder>
   <Folder Name="/UI/">
     <Project Path="WebBFF/WebBFF.csproj" Id="409d6861-8864-45b7-a0bb-ffe27cf3d102" />
   </Folder>

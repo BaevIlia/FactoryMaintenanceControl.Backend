@@ -12,6 +12,8 @@ public class User
 
     public string Password { get; set; }
 
+    public string FullName { get; set; }
+
     public string PhoneNumber { get; set; }
 
     public JobTitle Title { get; set; }
@@ -30,6 +32,7 @@ public class UserEntityConfiguration : IEntityTypeConfiguration<User>
         builder.HasData(new User
         {
             Id = Guid.Parse("c5209f70-7106-4166-b1c1-36a07693129f"),
+            FullName = "Иванов Иван Иванович",
             Email = "engineer@job.ru",
             Password = "1234",
             PhoneNumber = "+79999999999",

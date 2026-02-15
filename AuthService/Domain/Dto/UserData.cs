@@ -2,4 +2,4 @@
 
 namespace AuthService.Domain.Dto;
 
-public record UserData(Guid Id, string Email, string Password, string PhoneNumber, JobTitle Title, DateTime RegistrationDate);
+public record UserData(Guid Id, string Email, string Password, string FullName, string PhoneNumber, JobTitle Title, DateTime RegistrationDate);

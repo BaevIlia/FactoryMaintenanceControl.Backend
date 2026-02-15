@@ -1,6 +1,14 @@
+using AuthService.Application.Events;
+using AuthService.Domain.Entities;
 using AuthService.Domain.Repositories.Implementations;
 using AuthService.Domain.Repositories.Interfaces;
 using AuthService.Infrastructure;
+using Rebus.Config;
+using Rebus.Routing.TypeBased;
+using Rebus.Serialization.Json;
+using Shared.EventBus;
+using System.Collections;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +24,29 @@ builder.Services.AddDbContext<AuthDbContext>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
+builder.Services.AutoRegisterHandlersFromAssembly(Assembly.GetExecutingAssembly());
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddRebus(cfg => cfg.Transport(t =>
+                                    t.UseRabbitMq(builder.Configuration.GetConnectionString("RabbitMQ"), "auth.service.queue").InputQueueOptions(q =>
+                                    {
+                                        q.SetDurable(true);
+                                        q.SetAutoDelete(false);
+                                    })
+                                    .ExchangeNames
+                                    (
+                                        directExchangeName: "auth.service.exchange"
+                                        )
+                                    )
+                                    .Serialization(s => s.ConfigureSerializer())
+                                    .Routing(r => r.TypeBased().Map<InternalUserCreatedEvent>("user.created.event.queue"))
+                                    .Options(o =>
+                                    {
+                                        o.SetNumberOfWorkers(1);
+                                        o.SetMaxParallelism(1);
+                                        o.LogPipeline(true);
+                                    })); 
 
 var app = builder.Build();
 

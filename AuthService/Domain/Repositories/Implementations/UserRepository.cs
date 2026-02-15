@@ -19,6 +19,7 @@ public class UserRepository : IUserRepository
         var userEntity = new User
         {
             Id = data.Id,
+            FullName = data.FullName,
             Email = data.Email,
             Password = data.Password,
             PhoneNumber = data.PhoneNumber,

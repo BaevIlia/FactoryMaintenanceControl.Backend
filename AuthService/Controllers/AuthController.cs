@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost("auth")]
+    [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginCommand command)
     {
         var result = await _mediator.Send(command);

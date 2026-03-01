@@ -3,9 +3,6 @@ using AuthService.Application.Tools.Interfaces;
 using AuthService.Domain.Entities;
 using AuthService.Domain.Repositories.Interfaces;
 using MediatR;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace AuthService.Application.Usecases.Commands;
 

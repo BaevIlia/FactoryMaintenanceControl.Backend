@@ -13,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly));
 
 builder.Services.AddRefitClient<IRequestServiceRestClient>().ConfigureHttpClient(x=>x.BaseAddress = new Uri("http://localhost:5122"));
+builder.Services.AddRefitClient<IAuthServiceRestClient>().ConfigureHttpClient(x => x.BaseAddress = new Uri("http://localhost:5124"));
 
 builder.Services.AddScoped<IRequestsService, RequestsService>();
 

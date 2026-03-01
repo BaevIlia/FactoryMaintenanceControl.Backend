@@ -17,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\RestClients\Requests\Requests\" />
     <Folder Include="Services\RestClients\Requests\Responses\" />
-    <Folder Include="Usecases\Command\" />
   </ItemGroup>
 
 </Project>

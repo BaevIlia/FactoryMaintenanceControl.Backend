@@ -11,15 +11,13 @@ namespace AuthService.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IBus _bus;
 
     public AuthController(IMediator mediator, IBus bus)
     {
         _mediator = mediator;
-        _bus = bus;
     }
 
-    [HttpGet]
+    [HttpGet("ping")]
     public async Task<IActionResult> Ping()
     {
         return Ok("Good");

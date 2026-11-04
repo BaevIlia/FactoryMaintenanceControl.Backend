@@ -15,14 +15,21 @@ public class UserRepository : IUserRepository
         _context = context;
     }
 
-    public async Task<User> GetByEmail(string email)
+    public async Task<User> GetByEmail(string email, CancellationToken cancellationToken)
     {
-        var res = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+        var res = await _context.Users.FirstOrDefaultAsync(u => u.Email == email, cancellationToken);
 
         return res;
     }
 
-    public async Task Register(UserData data)
+    public async Task<User> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        var userEntity = await _context.Users.FirstOrDefaultAsync(u => u.Id == id,  cancellationToken);
+        
+        return userEntity;
+    }
+
+    public async Task Register(UserData data, CancellationToken cancellationToken)
     {
         var userEntity = new User
         {
@@ -37,6 +44,6 @@ public class UserRepository : IUserRepository
 
         _context.Users.Add(userEntity);
 
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

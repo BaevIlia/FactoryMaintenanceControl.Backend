@@ -37,7 +37,7 @@ public class RegistrationCommand : IRequest
         {
             var newUser = new UserData(Guid.NewGuid(), request.Email, _hasher.Hash(request.Password), request.FullName, request.PhoneNumber, request.Title, DateTime.Now);
 
-            await _repository.Register(newUser);
+            await _repository.Register(newUser, cancellationToken);
 
             var @event = new InternalUserCreatedEvent
             {

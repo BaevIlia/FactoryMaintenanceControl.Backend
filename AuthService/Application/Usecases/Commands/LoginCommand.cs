@@ -30,16 +30,17 @@ public class LoginCommand : IRequest<string>
 
         public async Task<string> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _repository.GetByEmail(request.Email);
+            var user = await _repository.GetByEmail(request.Email, cancellationToken);
+            
+            if(user == null)
+                throw new Exception($"Пользователь с email: {request.Email} не найден");
 
             var verifyResult = _hasher.Verify(request.Password, user.Password);
 
             if (verifyResult == false)
                 throw new Exception("Неверно указана почта или пароль");
 
-            var token = _provider.GenerateToken(user);
-
-            return token;
+            return _provider.GenerateToken(user);
         }
     }
 }

@@ -10,16 +10,22 @@
     <PackageReference Include="AutoMapper" Version="16.0.0" />
     <PackageReference Include="MediatR" Version="14.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.14" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
     <PackageReference Include="Refit" Version="9.0.2" />
     <PackageReference Include="Refit.HttpClientFactory" Version="9.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\RestClients\Requests\Requests\" />
-    <Folder Include="Services\RestClients\Requests\Responses\" />
-    <Folder Include="Usecases\Command\" />
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Authentication.JwtBearer">
+      <HintPath>..\..\..\.nuget\packages\microsoft.aspnetcore.authentication.jwtbearer\10.0.3\lib\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

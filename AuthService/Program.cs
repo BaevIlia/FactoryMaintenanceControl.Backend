@@ -12,19 +12,33 @@ using Rebus.Serialization.Json;
 using Shared.EventBus;
 using System.Collections;
 using System.Reflection;
+using AuthService.Application.Usecases.Queries;
 using Microsoft.EntityFrameworkCore;
-using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(cfg =>
+{
+    cfg.AddPolicy("TestPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .WithOrigins("http://localhost:5240")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 builder.Services.AddDbContext<AuthDbContext>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
 
@@ -69,11 +83,14 @@ using (var scope = app.Services.CreateAsyncScope())
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
+app.UseCors("TestPolicy");
+
 app.UseAuthorization();
+
 
 app.MapControllers();
 

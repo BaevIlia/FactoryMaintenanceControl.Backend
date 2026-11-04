@@ -5,7 +5,9 @@ namespace AuthService.Domain.Repositories.Interfaces;
 
 public interface IUserRepository
 {
-    Task Register(UserData data);
+    Task Register(UserData data, CancellationToken cancellationToken);
 
-    Task<User> GetByEmail(string email);
+    Task<User> GetByEmail(string email, CancellationToken cancellationToken);
+
+    Task<User> GetById(Guid id, CancellationToken cancellationToken);
 }

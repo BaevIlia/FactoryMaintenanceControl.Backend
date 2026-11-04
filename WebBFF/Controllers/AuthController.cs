@@ -1,6 +1,9 @@
-﻿using MediatR;
+using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebBFF.Usecases.Command.Auth;
+using WebBFF.Application.Usecases.Commands.Auth;
+using WebBFF.Usecases.Queries.Auth.GetUserData;
 
 namespace WebBFF.Controllers;
 
@@ -16,10 +19,19 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Auth([FromBody] AuthCommand command)
+    public async Task<IActionResult> Auth([FromBody] AuthCommand request, CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var token = await _mediator.Send(request, cancellationToken);
+        
+        return Ok(token);
+    }
 
-        return Ok(result);
+    [HttpGet("userdata")]
+    [Authorize]
+    public async Task<IActionResult> GetUserData(CancellationToken cancellationToken = default)
+    {
+        var data = await _mediator.Send(new GetUserDataQuery(),  cancellationToken);
+        
+        return Ok(data);
     }
 }

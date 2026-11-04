@@ -1,6 +1,8 @@
 ﻿using AuthService.Application.Events;
 using AuthService.Application.Usecases.Commands;
+using AuthService.Application.Usecases.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rebus.Bus;
 
@@ -11,19 +13,21 @@ namespace AuthService.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IBus _bus;
 
     public AuthController(IMediator mediator, IBus bus)
     {
         _mediator = mediator;
-        _bus = bus;
     }
 
-    [HttpGet]
+    [HttpGet("ping")]
     public async Task<IActionResult> Ping()
     {
         return Ok("Good");
     }
+
+    [HttpGet("userData")]
+    public async Task<IActionResult> GetUserData([FromQuery] Guid userId, CancellationToken cancellationToken)
+        => Ok(await _mediator.Send(new GetUserDataQuery(userId), cancellationToken));
 
     [HttpPost("register")]
     public async Task<IActionResult> Registration([FromBody] RegistrationCommand command)

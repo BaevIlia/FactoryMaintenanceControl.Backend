@@ -15,7 +15,11 @@ public class JwtProvider(IOptions<JwtOptions> options) : ITokenProvider
 
     public string GenerateToken(User user)
     {
-        Claim[] claims = [new("userId", user.Id.ToString()), new("role", user.Title.ToString())];
+        Claim[] claims = 
+        [
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Role, user.Title.ToString())
+        ];
 
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.SecretKey)),

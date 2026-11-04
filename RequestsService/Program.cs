@@ -4,6 +4,7 @@ using RequestsService.Domain.Repositories.Implementations;
 using RequestsService.Domain.Repositories.Interfaces;
 using RequestsService.Infrastructure;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Shared.EventBus;
 using RequestsService.Application.Events;
 
@@ -53,11 +54,14 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.G
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-var hanlerType = typeof(InternalUserCreatedEvent.Handler);
-
-Console.WriteLine($"{hanlerType != null}");
-
 var app = builder.Build();
+
+using (var scope = app.Services.CreateAsyncScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<RequestDbContext>();
+    
+    context.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment()) 
 {

@@ -12,4 +12,10 @@
     <PackageReference Include="Rebus.RabbitMq" Version="10.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+      <HintPath>..\..\..\.dotnet\packs\Microsoft.AspNetCore.App.Ref\10.0.13\ref\net10.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
